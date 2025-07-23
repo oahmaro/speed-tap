@@ -41,4 +41,13 @@ export async function POST(req: Request) {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
   });
+}
+
+// GET: Return users sorted by steps (leaderboard)
+export async function GET() {
+  const sorted = [...users].sort((a, b) => b.steps - a.steps);
+  return new Response(JSON.stringify(sorted), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
 } 
