@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -110,6 +111,95 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* Entry screen animated background */
+.entry-bg {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #d13cff 0%, #ff5eb0 100%);
+  overflow: hidden;
+}
+
+.entry-bg__zigzag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: url('/bg-zigzag.svg') repeat-x;
+  background-size: auto 100vh;
+  animation: zigzagMoveBg 12s linear infinite;
+}
+
+@keyframes zigzagMoveBg {
+  0% { background-position-x: 0; }
+  100% { background-position-x: -100vh; }
+}
+
+.entry-bg__content {
+  position: relative;
+  z-index: 1;
+}
+
+.funky-btn {
+  background: #a259ff;
+  color: #fff;
+  border: 4px solid #fff;
+  border-radius: 999px;
+  font-family: 'Luckiest Guy', 'Arial Rounded MT Bold', Arial, sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.9em 2em 0.55em 2em;
+  box-shadow: 0 4px 16px 0 rgba(0,0,0,0.15);
+  transition: transform 0.1s;
+  outline: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.funky-btn:active {
+  transform: scale(0.97);
+}
+
+.funky-btn:hover {
+  background: #b97cff;
+}
+
+.funky-btn--secondary {
+  background: #fff;
+  color: #a259ff;
+  border: 4px solid #a259ff;
+  box-shadow: 0 4px 16px 0 rgba(162,89,255,0.15);
+}
+
+.funky-btn--secondary:hover {
+  background: #fff;
+  border-color: #b97cff;
+  color: #b97cff;
+}
+
+.funky-btn--sm {
+  font-size: 1.1rem;
+  padding: 0.5em 1.2em 0.3em 1.2em;
+}
+
+.funky-btn--md {
+  font-size: 1.5rem;
+  padding: 0.7em 1.7em 0.45em 1.7em;
+}
+
+.funky-btn--lg {
+  font-size: 2rem;
+  padding: 0.9em 2em 0.55em 2em;
 }
 
 @layer base {
