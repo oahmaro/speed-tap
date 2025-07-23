@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 export type GameState = 'entry' | 'waiting' | 'indicator';
 export type IndicatorSide = 'left' | 'right';
-export type Feedback = 'success' | 'wrong' | null;
+export type Feedback = 'success' | 'wrong' | 'tooSoon' | null;
 
 export function useGame() {
   const [username, setUsername] = useState('');
@@ -23,6 +23,25 @@ export function useGame() {
       setGameState('indicator');
     }, delay);
   }, []);
+
+  // Handle keypress during waiting state (Too Soon)
+  useEffect(() => {
+    if (gameState !== 'waiting') return;
+    const handleKey = () => {
+      if (!feedback) setFeedback('tooSoon');
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [gameState, feedback]);
+
+  // After 'tooSoon' feedback, restart game
+  useEffect(() => {
+    if (feedback !== 'tooSoon') return;
+    const timeout = setTimeout(() => {
+      startGame();
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [feedback, startGame]);
 
   // Handle keypress during indicator state
   useEffect(() => {
@@ -52,9 +71,9 @@ export function useGame() {
     return () => clearTimeout(timeout);
   }, [gameState, feedback]);
 
-  // After feedback, restart game (go to waiting state)
+  // After feedback (except tooSoon), restart game (go to waiting state)
   useEffect(() => {
-    if (!feedback) return;
+    if (!feedback || feedback === 'tooSoon') return;
     const timeout = setTimeout(() => {
       startGame();
     }, 1000);

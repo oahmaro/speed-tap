@@ -31,7 +31,11 @@ export default function Home() {
               feedback === "success" ? "text-green-600" : "text-red-600"
             }`}
           >
-            {feedback === "success" ? "Success!" : "Wrong Key"}
+            {feedback === "success"
+              ? "Success!"
+              : feedback === "wrong"
+              ? "Wrong Key"
+              : null}
           </div>
         )}
       </>
@@ -40,9 +44,16 @@ export default function Home() {
 
   if (gameState === "waiting") {
     return (
-      <div className="flex flex-col items-center mt-24 text-xl">
-        Get ready...
-      </div>
+      <>
+        <div className="flex flex-col items-center mt-24 text-xl">
+          Get ready...
+        </div>
+        {feedback === "tooSoon" && (
+          <div className="fixed bottom-8 left-0 w-full text-center text-xl font-semibold text-red-600">
+            Too Soon
+          </div>
+        )}
+      </>
     );
   }
 
