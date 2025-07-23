@@ -1,30 +1,23 @@
 "use client";
 
-import { useState } from "react";
 import { Button, Input } from "@/components/ui";
+import { useGame } from "./useGame";
 
 export default function Home() {
-  const [username, setUsername] = useState("");
-  const [gameState, setGameState] = useState<"entry" | "waiting" | "indicator">(
-    "entry"
-  );
+  const { username, setUsername, gameState, indicatorSide, startGame } =
+    useGame();
 
   const handleStart = (e: React.FormEvent) => {
     e.preventDefault();
     if (username.trim()) {
-      setGameState("waiting");
-      // Wait 2-5 seconds, then show indicator
-      const delay = 2000 + Math.random() * 3000;
-      setTimeout(() => {
-        setGameState("indicator");
-      }, delay);
+      startGame();
     }
   };
 
   if (gameState === "indicator") {
     return (
       <div className="flex flex-col items-center mt-24 text-2xl font-bold">
-        [Indicator placeholder]
+        [Indicator placeholder: {indicatorSide}]
       </div>
     );
   }
