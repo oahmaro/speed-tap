@@ -1,12 +1,18 @@
 "use client";
 
+import { Button, Input } from "@/components/ui";
 import { useGame } from "./useGame";
 import { Indicator } from "@/components/game";
-import { Button, Input } from "@/components/ui";
 
 export default function Home() {
-  const { username, setUsername, gameState, indicatorSide, startGame } =
-    useGame();
+  const {
+    username,
+    setUsername,
+    gameState,
+    indicatorSide,
+    startGame,
+    feedback,
+  } = useGame();
 
   const handleStart = (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,7 +22,20 @@ export default function Home() {
   };
 
   if (gameState === "indicator" && indicatorSide) {
-    return <Indicator side={indicatorSide} />;
+    return (
+      <>
+        <Indicator side={indicatorSide} />
+        {feedback && (
+          <div
+            className={`fixed bottom-8 left-0 w-full text-center text-xl font-semibold ${
+              feedback === "success" ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {feedback === "success" ? "Success!" : "Wrong Key"}
+          </div>
+        )}
+      </>
+    );
   }
 
   if (gameState === "waiting") {

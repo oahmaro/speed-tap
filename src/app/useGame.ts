@@ -1,16 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export type GameState = 'entry' | 'waiting' | 'indicator';
 export type IndicatorSide = 'left' | 'right';
+export type Feedback = 'success' | 'wrong' | null;
 
 export function useGame() {
   const [username, setUsername] = useState('');
   const [gameState, setGameState] = useState<GameState>('entry');
   const [indicatorSide, setIndicatorSide] = useState<IndicatorSide | null>(null);
+  const [feedback, setFeedback] = useState<Feedback>(null);
 
   // Start the game: go to waiting, then indicator
-  const startGame = () => {
+  const startGame = useCallback(() => {
     setGameState('waiting');
+    setFeedback(null);
     // Wait 2-5 seconds, then show indicator
     const delay = 2000 + Math.random() * 3000;
     setTimeout(() => {
@@ -19,13 +22,51 @@ export function useGame() {
       setIndicatorSide(side);
       setGameState('indicator');
     }, delay);
-  };
+  }, []);
 
-  // Reset to entry state
+  // Handle keypress during indicator state
+  useEffect(() => {
+    if (gameState !== 'indicator' || !indicatorSide) return;
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (feedback) return; // Ignore if feedback is already shown
+      if (
+        (indicatorSide === 'left' && e.key.toLowerCase() === 'a') ||
+        (indicatorSide === 'right' && e.key.toLowerCase() === 'l')
+      ) {
+        setFeedback('success');
+      } else {
+        setFeedback('wrong');
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [gameState, indicatorSide, feedback]);
+
+  // After 1s, if no feedback, set feedback to 'wrong' (too late will be handled in next step)
+  useEffect(() => {
+    if (gameState !== 'indicator' || feedback) return;
+    const timeout = setTimeout(() => {
+      setFeedback('wrong');
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [gameState, feedback]);
+
+  // After feedback, restart game (go to waiting state)
+  useEffect(() => {
+    if (!feedback) return;
+    const timeout = setTimeout(() => {
+      startGame();
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [feedback, startGame]);
+
+  // Reset to entry state (if needed)
   const reset = () => {
     setUsername('');
     setGameState('entry');
     setIndicatorSide(null);
+    setFeedback(null);
   };
 
   return {
@@ -35,5 +76,6 @@ export function useGame() {
     indicatorSide,
     startGame,
     reset,
+    feedback,
   };
 } 
