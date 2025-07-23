@@ -1,7 +1,8 @@
 "use client";
 
-import { Button, Input } from "@/components/ui";
 import { useGame } from "./useGame";
+import { Indicator } from "@/components/game";
+import { Button, Input } from "@/components/ui";
 
 export default function Home() {
   const { username, setUsername, gameState, indicatorSide, startGame } =
@@ -14,12 +15,8 @@ export default function Home() {
     }
   };
 
-  if (gameState === "indicator") {
-    return (
-      <div className="flex flex-col items-center mt-24 text-2xl font-bold">
-        [Indicator placeholder: {indicatorSide}]
-      </div>
-    );
+  if (gameState === "indicator" && indicatorSide) {
+    return <Indicator side={indicatorSide} />;
   }
 
   if (gameState === "waiting") {
