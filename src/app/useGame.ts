@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 export type GameState = 'entry' | 'waiting' | 'indicator';
 export type IndicatorSide = 'left' | 'right';
@@ -10,11 +10,14 @@ export function useGame() {
   const [indicatorSide, setIndicatorSide] = useState<IndicatorSide | null>(null);
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [steps, setSteps] = useState(0);
+  const [indicatorProgress, setIndicatorProgress] = useState(0); // 0=start, 1=end
+  const rafRef = useRef<number | null>(null);
 
   // Start the game: go to waiting, then indicator
   const startGame = useCallback(() => {
     setGameState('waiting');
     setFeedback(null);
+    setIndicatorProgress(0);
     // Wait 2-5 seconds, then show indicator
     const delay = 2000 + Math.random() * 3000;
     setTimeout(() => {
@@ -24,6 +27,29 @@ export function useGame() {
       setGameState('indicator');
     }, delay);
   }, []);
+
+  // Animate indicator progress (for fading)
+  useEffect(() => {
+    if (gameState !== 'indicator' || feedback) {
+      setIndicatorProgress(0);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      return;
+    }
+    let start: number | null = null;
+    function animate(ts: number) {
+      if (!start) start = ts;
+      const elapsed = ts - start;
+      const progress = Math.min(elapsed / 1000, 1); // 1s duration
+      setIndicatorProgress(progress);
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(animate);
+      }
+    }
+    rafRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [gameState, feedback]);
 
   // Handle keypress during waiting state (Too Soon)
   useEffect(() => {
@@ -103,6 +129,7 @@ export function useGame() {
     setIndicatorSide(null);
     setFeedback(null);
     setSteps(0);
+    setIndicatorProgress(0);
   };
 
   return {
@@ -114,5 +141,6 @@ export function useGame() {
     reset,
     feedback,
     steps,
+    indicatorProgress,
   };
 } 

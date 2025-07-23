@@ -4,19 +4,24 @@ export type IndicatorSide = "left" | "right";
 
 interface IndicatorProps {
   side: IndicatorSide;
+  opacity?: number; // 0-1, for fading effect
 }
 
-export function Indicator({ side }: IndicatorProps) {
+export function Indicator({ side, opacity = 1 }: IndicatorProps) {
   return (
-    <div className="flex w-full justify-between items-center mt-24">
-      <div className="flex-1 flex justify-start">
-        {side === "left" && <div className="w-16 h-16 bg-black rounded-full" />}
-      </div>
-      <div className="flex-1 flex justify-end">
-        {side === "right" && (
-          <div className="w-16 h-16 bg-black rounded-full" />
-        )}
-      </div>
+    <div className="relative w-64 h-16 flex items-center justify-center">
+      {side === "left" && (
+        <div
+          className="absolute left-0 w-16 h-16 bg-black rounded-full"
+          style={{ opacity }}
+        />
+      )}
+      {side === "right" && (
+        <div
+          className="absolute right-0 w-16 h-16 bg-black rounded-full"
+          style={{ opacity }}
+        />
+      )}
     </div>
   );
 }
