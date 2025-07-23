@@ -53,7 +53,7 @@ export default function GameScreen() {
         ) && (
           <div className="fixed bottom-8 left-0 w-full flex justify-center z-50">
             <span
-              className={`px-6 py-3 rounded-full font-bold text-xl shadow-lg bg-white/80 ${
+              className={`px-6 py-3 rounded-full font-bold text-xl shadow-lg bg-white ${
                 feedback === "success" ? "text-green-600" : "text-red-600"
               }`}
             >
@@ -69,7 +69,7 @@ export default function GameScreen() {
         )}
       {gameState === "waiting" && feedback === "tooSoon" && (
         <div className="fixed bottom-8 left-0 w-full flex justify-center z-50">
-          <span className="px-6 py-3 rounded-full font-bold text-xl shadow-lg bg-white/80 text-red-600">
+          <span className="px-6 py-3 rounded-full font-bold text-xl shadow-lg bg-white text-red-600">
             Too Soon
           </span>
         </div>

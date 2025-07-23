@@ -1,8 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Speed Tap
+
+This is a [Next.js](https://nextjs.org) home assignment project. It is designed to be easy to run and review, with no external database or complex setup required.
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies:**
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+2. **Run the development server:**
 
 ```bash
 npm run dev
@@ -14,23 +28,41 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Storybook (UI Components)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To view and develop UI components in isolation, you can run Storybook:
 
-## Learn More
+```bash
+npm run storybook
+# or
+yarn storybook
+# or
+pnpm storybook
+# or
+bun storybook
+```
 
-To learn more about Next.js, take a look at the following resources:
+Storybook will be available at [http://localhost:6006](http://localhost:6006).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **No database setup required:**
+  - All user and leaderboard data is stored in-memory for simplicity and ease of review. Data will reset on server restart.
+  - In a production scenario, a persistent database would be used.
+- **APIs used for enrichment:**
+  - [Genderize.io](https://genderize.io/) to guess user gender (probability > 0.95, otherwise "undetermined").
+  - [Random User Generator](https://randomuser.me/) to fetch mock profile data based on gender.
+- **Leaderboard:**
+  - The backend provides an API endpoint to return the leaderboard, sorted by steps. No UI is provided for the leaderboard as per assignment requirements.
 
-## Deploy on Vercel
+## Folder Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `src/app/` — Main app and screens
+- `src/components/` — UI and game components
+- `src/app/api/` — Backend API routes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+For any questions or issues, please contact the author.
