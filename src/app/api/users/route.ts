@@ -1,14 +1,17 @@
 // In-memory user storage
 let users: User[] = [];
 
+import { enrichUser, Gender, EnrichedData } from './enrich';
+
 interface User {
   id: string;
   name: string;
   steps: number;
-  gender: 'male' | 'female' | 'undetermined';
-  enrichedData?: any;
+  gender: Gender;
+  enrichedData?: EnrichedData;
 }
 
+// Handle user creation and update. Enrich new users with gender and mock profile.
 export async function POST(req: Request) {
   const { name, steps } = await req.json();
 
@@ -22,13 +25,15 @@ export async function POST(req: Request) {
   if (user) {
     user.steps = steps;
   } else {
+    // Use enrichment utility for new users
+    const { gender, enrichedData } = await enrichUser(name);
     user = {
-      id: Math.random().toString(36).slice(2, 11), // Simple ID generation
+      id: Math.random().toString(36).slice(2, 11),
       name,
       steps,
-      gender: 'undetermined',
+      gender,
+      enrichedData,
     };
-    
     users.push(user);
   }
 
