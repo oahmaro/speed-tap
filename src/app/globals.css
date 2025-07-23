@@ -149,7 +149,6 @@
   color: #fff;
   border: 4px solid #fff;
   border-radius: 999px;
-  font-family: 'Luckiest Guy', 'Arial Rounded MT Bold', Arial, sans-serif;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -180,13 +179,14 @@
 }
 
 .funky-btn--secondary:hover {
+  background: #fff;
   border-color: #b97cff;
   color: #b97cff;
 }
 
 .funky-btn--sm {
   font-size: 1.1rem;
-  padding: 0.5em 1.2em 0.3em 1.2em;
+  padding: 0.6em 1.2em 0.3em 1.2em;
 }
 
 .funky-btn--md {
@@ -196,7 +196,13 @@
 
 .funky-btn--lg {
   font-size: 2rem;
-  padding: 1.05em 2em 0.55em 2em;
+  padding: 1em 2em 0.7em 2em;
+}
+
+.funky-btn:disabled,
+.funky-btn[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 @layer base {
@@ -205,7 +211,6 @@
   border-radius: 999px;
   background: transparent;
   color: #fff;
-  font-family: 'Luckiest Guy', 'Arial Rounded MT Bold', Arial, sans-serif;
   font-size: 1.3rem;
   height: 56px;
   line-height: 48px;
@@ -258,4 +263,19 @@
     @apply bg-background text-foreground;
     font-family: 'Luckiest Guy', 'Arial Rounded MT Bold', Arial, sans-serif;
   }
+}
+
+input,
+textarea,
+button {
+  font-family: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  font-family: inherit;
+}
+
+* {
+  font-family: 'Luckiest Guy', cursive !important;
 }

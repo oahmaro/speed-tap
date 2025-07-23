@@ -57,3 +57,58 @@ export const SecondaryLarge: Story = {
     size: "lg",
   },
 };
+
+export const Disabled: Story = {
+  args: {
+    children: "Disabled",
+    variant: "default",
+    size: "md",
+    disabled: true,
+  },
+};
+
+export const DisabledSecondary: Story = {
+  args: {
+    children: "Disabled",
+    variant: "secondary",
+    size: "md",
+    disabled: true,
+  },
+};
+
+export const AllSizes = {
+  render: () => (
+    <div
+      style={{
+        background: "#a259ff",
+        padding: "2rem",
+        display: "flex",
+        flexDirection: "column",
+        gap: "2rem",
+      }}
+    >
+      <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
+        <Button size="sm" variant="default">
+          Small
+        </Button>
+        <Button size="md" variant="default">
+          Medium
+        </Button>
+        <Button size="lg" variant="default">
+          Large
+        </Button>
+      </div>
+      <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
+        <Button size="sm" variant="secondary">
+          Small
+        </Button>
+        <Button size="md" variant="secondary">
+          Medium
+        </Button>
+        <Button size="lg" variant="secondary">
+          Large
+        </Button>
+      </div>
+    </div>
+  ),
+};
