@@ -9,6 +9,7 @@ export function useGame() {
   const [gameState, setGameState] = useState<GameState>('entry');
   const [indicatorSide, setIndicatorSide] = useState<IndicatorSide | null>(null);
   const [feedback, setFeedback] = useState<Feedback>(null);
+  const [steps, setSteps] = useState(0);
 
   // Start the game: go to waiting, then indicator
   const startGame = useCallback(() => {
@@ -71,6 +72,21 @@ export function useGame() {
     return () => clearTimeout(timeout);
   }, [gameState, feedback]);
 
+  // On success, increment steps and POST to backend (fixed loop)
+  useEffect(() => {
+    if (feedback !== 'success' || !username) return;
+    setSteps(prevSteps => {
+      const newSteps = prevSteps + 1;
+      fetch('/api/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: username, steps: newSteps }),
+      });
+      return newSteps;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [feedback, username]);
+
   // After feedback (except tooSoon), restart game (go to waiting state)
   useEffect(() => {
     if (!feedback || feedback === 'tooSoon') return;
@@ -86,6 +102,7 @@ export function useGame() {
     setGameState('entry');
     setIndicatorSide(null);
     setFeedback(null);
+    setSteps(0);
   };
 
   return {
@@ -96,5 +113,6 @@ export function useGame() {
     startGame,
     reset,
     feedback,
+    steps,
   };
 } 
