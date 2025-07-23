@@ -35,6 +35,8 @@ export default function Home() {
               ? "Success!"
               : feedback === "wrong"
               ? "Wrong Key"
+              : feedback === "tooLate"
+              ? "Too Late"
               : null}
           </div>
         )}

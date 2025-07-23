@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 export type GameState = 'entry' | 'waiting' | 'indicator';
 export type IndicatorSide = 'left' | 'right';
-export type Feedback = 'success' | 'wrong' | 'tooSoon' | null;
+export type Feedback = 'success' | 'wrong' | 'tooSoon' | 'tooLate' | null;
 
 export function useGame() {
   const [username, setUsername] = useState('');
@@ -62,11 +62,11 @@ export function useGame() {
     return () => window.removeEventListener('keydown', handleKey);
   }, [gameState, indicatorSide, feedback]);
 
-  // After 1s, if no feedback, set feedback to 'wrong' (too late will be handled in next step)
+  // After 1s, if no feedback, set feedback to 'tooLate'
   useEffect(() => {
     if (gameState !== 'indicator' || feedback) return;
     const timeout = setTimeout(() => {
-      setFeedback('wrong');
+      setFeedback('tooLate');
     }, 1000);
     return () => clearTimeout(timeout);
   }, [gameState, feedback]);
