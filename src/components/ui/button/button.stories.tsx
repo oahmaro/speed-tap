@@ -12,27 +12,48 @@ type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
   args: {
-    children: "Button",
+    children: "Download Now",
+    variant: "default",
+    size: "md",
   },
 };
 
-export const Destructive: Story = {
+export const DefaultSmall: Story = {
   args: {
-    children: "Destructive",
-    variant: "destructive",
+    children: "Download Now",
+    variant: "default",
+    size: "sm",
   },
 };
 
-export const Outline: Story = {
+export const DefaultLarge: Story = {
   args: {
-    children: "Outline",
-    variant: "outline",
+    children: "Download Now",
+    variant: "default",
+    size: "lg",
   },
 };
 
-export const Large: Story = {
+export const Secondary: Story = {
   args: {
-    children: "Large",
+    children: "Creative",
+    variant: "secondary",
+    size: "md",
+  },
+};
+
+export const SecondarySmall: Story = {
+  args: {
+    children: "Creative",
+    variant: "secondary",
+    size: "sm",
+  },
+};
+
+export const SecondaryLarge: Story = {
+  args: {
+    children: "Creative",
+    variant: "secondary",
     size: "lg",
   },
 };
