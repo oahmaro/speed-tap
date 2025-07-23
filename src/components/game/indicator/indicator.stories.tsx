@@ -5,6 +5,19 @@ const meta: Meta<typeof Indicator> = {
   component: Indicator,
   title: "game/Indicator",
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <div
+        style={{
+          background: "linear-gradient(180deg, #a259ff 0%, #6c63ff 100%)",
+          padding: "2rem",
+          minHeight: 120,
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
 };
 export default meta;
 

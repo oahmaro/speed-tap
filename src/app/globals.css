@@ -131,7 +131,7 @@
   pointer-events: none;
   background: url('/bg-zigzag.svg') repeat-x;
   background-size: auto 100vh;
-  animation: zigzagMoveBg 12s linear infinite;
+  animation: zigzagMoveBg 32s linear infinite;
 }
 
 @keyframes zigzagMoveBg {
@@ -278,4 +278,66 @@ textarea::placeholder {
 
 * {
   font-family: 'Luckiest Guy', cursive !important;
+}
+
+.animated-circle-bg {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, #a259ff 0%, #6c63ff 100%);
+}
+
+.animated-circle {
+  animation: rippleCircle 8s linear infinite;
+  animation-fill-mode: both;
+}
+
+.animated-circle--0 {
+  animation-delay: -0s;
+  animation-name: rippleCircle0;
+}
+.animated-circle--1 {
+  animation-delay: -1.5s;
+  animation-name: rippleCircle1;
+}
+.animated-circle--2 {
+  animation-delay: -3s;
+  animation-name: rippleCircle2;
+}
+.animated-circle--3 {
+  animation-delay: -4.5s;
+  animation-name: rippleCircle3;
+}
+
+@keyframes rippleCircle0 {
+  0% { transform: scale(0.5); opacity: 0; }
+  20% { opacity: 0.7; }
+  70% { opacity: 0.3; }
+  100% { transform: scale(1.2); opacity: 0; }
+}
+@keyframes rippleCircle1 {
+  0% { transform: scale(0.7); opacity: 0; }
+  20% { opacity: 0.7; }
+  70% { opacity: 0.3; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+@keyframes rippleCircle2 {
+  0% { transform: scale(0.9); opacity: 0; }
+  20% { opacity: 0.7; }
+  70% { opacity: 0.3; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+@keyframes rippleCircle3 {
+  0% { transform: scale(1.1); opacity: 0; }
+  20% { opacity: 0.7; }
+  70% { opacity: 0.3; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.shadow-indicator {
+  box-shadow: 0 4px 16px 0 rgba(255,59,107,0.15);
 }

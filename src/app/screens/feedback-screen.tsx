@@ -15,7 +15,7 @@ export default function FeedbackScreen() {
       <ScoreBar steps={steps} />
       <ResetBar onReset={reset} />
       <InstructionsBar />
-      <div className="flex flex-col items-center mt-24 text-2xl font-bold">
+      <div className="flex flex-col items-center mt-24 text-2xl font-bold text-white">
         Next round starting...
       </div>
     </>

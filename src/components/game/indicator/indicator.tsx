@@ -12,13 +12,13 @@ export function Indicator({ side, opacity = 1 }: IndicatorProps) {
     <div className="relative w-64 h-16 flex items-center justify-center">
       {side === "left" && (
         <div
-          className="absolute left-0 w-16 h-16 bg-black rounded-full"
+          className="absolute left-0 w-16 h-16 bg-white rounded-full border-4 border-[#000] shadow-indicator"
           style={{ opacity }}
         />
       )}
       {side === "right" && (
         <div
-          className="absolute right-0 w-16 h-16 bg-black rounded-full"
+          className="absolute right-0 w-16 h-16 bg-white rounded-full border-4 border-[#000] shadow-indicator"
           style={{ opacity }}
         />
       )}

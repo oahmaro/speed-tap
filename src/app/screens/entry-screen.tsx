@@ -1,6 +1,7 @@
 import React from "react";
 import { Input, Button } from "@/components/ui";
 import { useGame } from "../game-context";
+import { InstructionsBar } from "@/components/game";
 
 export default function EntryScreen() {
   const { username, setUsername, startGame } = useGame();
@@ -37,6 +38,7 @@ export default function EntryScreen() {
               START
             </Button>
           </form>
+          <InstructionsBar />
         </main>
       </div>
     </div>

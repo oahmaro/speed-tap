@@ -1,13 +1,29 @@
 import React from "react";
 
-export const InstructionsBar: React.FC = () => (
-  <div className="fixed bottom-4 left-4 text-gray-600 text-base z-10 bg-white/80 rounded p-2">
-    Instructions:
-    <ul className="list-disc ml-6">
-      <li>Wait for the circle to appear</li>
-      <li>Press 'A' if it appears on the left</li>
-      <li>Press 'L' if it appears on the right</li>
-      <li>You have 1 second to react!</li>
+type InstructionsBarProps = {
+  fixed?: boolean;
+};
+
+export const InstructionsBar: React.FC<InstructionsBarProps> = ({
+  fixed = true,
+}) => (
+  <div
+    className={
+      (fixed ? "fixed bottom-4 left-4 z-10 p-0 text-white" : "p-0 text-white") +
+      ""
+    }
+  >
+    <ul>
+      <li>WAIT FOR THE CIRCLE TO APPEAR</li>
+      <li>
+        PRESS <span className="text-yellow-400">'A'</span> IF IT APPEARS ON THE
+        LEFT
+      </li>
+      <li>
+        PRESS <span className="text-yellow-400">'L'</span> IF IT APPEARS ON THE
+        RIGHT
+      </li>
+      <li>YOU HAVE 1 SECOND TO REACT!</li>
     </ul>
   </div>
 );
