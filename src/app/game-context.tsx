@@ -52,6 +52,15 @@ export const GameProvider: FC<GameProviderProps> = ({ children }) => {
 
   // Start the game: go to waiting, then indicator
   const startGame = useCallback(() => {
+    // Create user if they don't exist (only on first game start)
+    if (username.trim() && gameState === "entry") {
+      fetch("/api/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: username, steps: 0 }),
+      });
+    }
+
     setGameState("waiting");
     setFeedback(null);
     setIndicatorProgress(0);
@@ -69,7 +78,7 @@ export const GameProvider: FC<GameProviderProps> = ({ children }) => {
       setGameState("indicator");
       waitingTimeoutRef.current = null;
     }, delay);
-  }, []);
+  }, [username, gameState]);
 
   // Animate indicator progress (for fading)
   useEffect(() => {
@@ -141,11 +150,12 @@ export const GameProvider: FC<GameProviderProps> = ({ children }) => {
     return () => clearTimeout(timeout);
   }, [gameState, feedback]);
 
-  // On success, increment steps and POST to backend (fixed loop)
+  // On success, increment steps and update user score
   useEffect(() => {
     if (feedback !== "success" || !username) return;
     setSteps((prevSteps) => {
       const newSteps = prevSteps + 1;
+      // Update user score (user already exists from startGame)
       fetch("/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -1,7 +1,7 @@
-// In-memory user storage
-let users: User[] = [];
-
 import { enrichUser, Gender, EnrichedData } from './enrich';
+
+// In-memory user storage (persists during server runtime)
+let users: User[] = [];
 
 interface User {
   id: string;
@@ -23,7 +23,10 @@ export async function POST(req: Request) {
   let user = users.find(u => u.name === name);
 
   if (user) {
-    user.steps = steps;
+    // Only update if new score is higher (preserve best score)
+    if (steps > user.steps) {
+      user.steps = steps;
+    }
   } else {
     // Use enrichment utility for new users
     const { gender, enrichedData } = await enrichUser(name);
